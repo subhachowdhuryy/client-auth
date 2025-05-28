@@ -14,53 +14,88 @@ interface UserInterface {
   joiningDate: string;
 }
 
-const UsersGrid = ({ refresh }: { refresh: number }) => {
-  const [rowData, setRowData] = useState<UserInterface[]>([]);
-  const [colDefs] = useState<ColDef<UserInterface>[]>([
-    {
-      headerName: "Sl No",
-      width: 80,
-      valueGetter: params => (params.node && params.node.rowIndex != null ? params.node.rowIndex + 1 : ""),
-      filter: false,
-      sortable: false,
-    },
-    { field: "name", headerName: "Name", width: 160, filter: true },
-    { field: "email", headerName: "Email", width: 220, filter: true },
-    { field: "phone", headerName: "Phone Number", width: 140, filter: true },
-    { field: "role", headerName: "Role", width: 120, filter: true },
-    { field: "joiningDate", headerName: "Joining Date", width: 140, filter: true },
-    {
-      headerName: "Action",
-      width: 100,
-      cellRenderer: (params: import("ag-grid-community").ICellRendererParams<UserInterface>) => (
-        <div style={{ display: "flex", gap: "8px" }}>
-          <button
-            title="Edit"
-            style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}
-            onClick={() => alert(`Edit user: ${params.data?.name ?? ""}`)}
-          >
-            <Pencil size={18} color="#6366f1" />
-          </button>
-          <button
-            title="Delete"
-            style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}
-            onClick={() => alert(`Delete user: ${params.data?.name ?? ""}`)}
-          >
-            <Trash2 size={18} color="#ef4444" />
-          </button>
-        </div>
-      ),
-      cellStyle: { display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" },
-      filter: false,
-      sortable: false,
-    },
-  ]);
+interface UsersGridProps {
+  refresh: number;
+  onEditUser: (user: UserInterface) => void;
+}
 
-  const defaultColDef = useMemo<ColDef>(() => ({
-    floatingFilter: true,
-    resizable: true,
-    sortable: true,
-  }), []);
+const UsersGrid = ({ refresh, onEditUser }: UsersGridProps) => {
+  const [rowData, setRowData] = useState<UserInterface[]>([]);
+  const [colDefs] = useState<ColDef<UserInterface>[]>(
+    [
+      {
+        headerName: "Sl No",
+        width: 80,
+        valueGetter: (params) =>
+          params.node && params.node.rowIndex != null
+            ? params.node.rowIndex + 1
+            : "",
+        filter: false,
+        sortable: false,
+      },
+      { field: "name", headerName: "Name", width: 160, filter: true },
+      { field: "email", headerName: "Email", width: 220, filter: true },
+      { field: "phone", headerName: "Phone Number", width: 140, filter: true },
+      { field: "role", headerName: "Role", width: 120, filter: true },
+      {
+        field: "joiningDate",
+        headerName: "Joining Date",
+        width: 140,
+        filter: true,
+      },
+      {
+        headerName: "Action",
+        width: 100,
+        cellRenderer: (
+          params: import("ag-grid-community").ICellRendererParams<UserInterface>
+        ) => (
+          <div style={{ display: "flex", gap: "8px" }}>
+            <button
+              title="Edit"
+              style={{
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+                padding: 0,
+              }}
+              onClick={() => params.data && onEditUser(params.data)}
+            >
+              <Pencil size={18} color="#6366f1" />
+            </button>
+            <button
+              title="Delete"
+              style={{
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+                padding: 0,
+              }}
+              onClick={() => alert(`Delete user: ${params.data?.name ?? ""}`)}
+            >
+              <Trash2 size={18} color="#ef4444" />
+            </button>
+          </div>
+        ),
+        cellStyle: {
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "8px",
+        },
+        filter: false,
+        sortable: false,
+      },
+    ]
+  );
+
+  const defaultColDef = useMemo<ColDef>(
+    () => ({
+      floatingFilter: true,
+      resizable: true,
+      sortable: true,
+    }),
+    []
+  );
 
   useEffect(() => {
     const users = JSON.parse(localStorage.getItem("users") || "[]");
