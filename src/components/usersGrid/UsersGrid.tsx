@@ -3,6 +3,7 @@ import "ag-grid-community/styles/ag-theme-quartz.css";
 import { AgGridReact } from "ag-grid-react";
 import { useEffect, useState, useMemo } from "react";
 import type { ColDef } from "ag-grid-community";
+import { Pencil, Trash2 } from "lucide-react"; // lucide-react icons
 
 interface UserInterface {
   id: number;
@@ -28,6 +29,31 @@ const UsersGrid = ({ refresh }: { refresh: number }) => {
     { field: "phone", headerName: "Phone Number", width: 140, filter: true },
     { field: "role", headerName: "Role", width: 120, filter: true },
     { field: "joiningDate", headerName: "Joining Date", width: 140, filter: true },
+    {
+      headerName: "Action",
+      width: 100,
+      cellRenderer: (params: import("ag-grid-community").ICellRendererParams<UserInterface>) => (
+        <div style={{ display: "flex", gap: "8px" }}>
+          <button
+            title="Edit"
+            style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}
+            onClick={() => alert(`Edit user: ${params.data?.name ?? ""}`)}
+          >
+            <Pencil size={18} color="#6366f1" />
+          </button>
+          <button
+            title="Delete"
+            style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}
+            onClick={() => alert(`Delete user: ${params.data?.name ?? ""}`)}
+          >
+            <Trash2 size={18} color="#ef4444" />
+          </button>
+        </div>
+      ),
+      cellStyle: { display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" },
+      filter: false,
+      sortable: false,
+    },
   ]);
 
   const defaultColDef = useMemo<ColDef>(() => ({
@@ -46,7 +72,7 @@ const UsersGrid = ({ refresh }: { refresh: number }) => {
       className="ag-theme-quartz"
       style={{
         height: 520,
-        width: 900,
+        width: 1000,
         margin: "0 auto",
       }}
     >
