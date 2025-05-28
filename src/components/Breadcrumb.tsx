@@ -11,9 +11,10 @@ interface BreadcrumbItem {
 
 interface BreadcrumbProps {
   items: BreadcrumbItem[];
+  onUserAdded?: () => void; // callback to refresh grid
 }
 
-const Breadcrumb: React.FC<BreadcrumbProps> = ({ items }) => {
+const Breadcrumb: React.FC<BreadcrumbProps> = ({ items, onUserAdded }) => {
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({
     name: "",
@@ -36,7 +37,13 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ items }) => {
       ...form,
       joiningDate: moment(form.joiningDate).format("YYYY-MM-DD"),
     };
-    console.log(formatted);
+    // Get existing users from localStorage
+    const existing = JSON.parse(localStorage.getItem("users") || "[]");
+    // Add new user with unique id
+    const newUser = { ...formatted, id: Date.now() };
+    const updated = [...existing, newUser];
+    localStorage.setItem("users", JSON.stringify(updated));
+    if (onUserAdded) onUserAdded();
     setOpen(false);
     setForm({
       name: "",
@@ -90,14 +97,6 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ items }) => {
                 letterSpacing: "1px",
                 transition: "background-color 0.3s ease",
                 backgroundColor: "#a3a8a7",
-              }}
-              onMouseEnter={(e) => {
-                (e.target as HTMLButtonElement).style.backgroundColor =
-                  "var(--color-indigo-700)";
-              }}
-              onMouseLeave={(e) => {
-                (e.target as HTMLButtonElement).style.backgroundColor =
-                  "#a3a8a7";
               }}
             >
               Click me
@@ -180,14 +179,6 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ items }) => {
                       letterSpacing: "1px",
                       transition: "background-color 0.3s ease",
                       backgroundColor: "#a3a8a7",
-                    }}
-                    onMouseEnter={(e) => {
-                      (e.target as HTMLButtonElement).style.backgroundColor =
-                        "var(--color-indigo-700)";
-                    }}
-                    onMouseLeave={(e) => {
-                      (e.target as HTMLButtonElement).style.backgroundColor =
-                        "#a3a8a7";
                     }}
                     type="submit"
                   >
