@@ -10,7 +10,7 @@ export default function Dashboard() {
         <div style={{ paddingTop: "80px" }}>
           <h1>Dashboard</h1>
           <p>Welcome! You are signed in.</p>
-          <div style={{ paddingTop: "80px" }}>
+          <div style={{ paddingTop: "20px" }}>
             <UsersGrid />
           </div>
         </div>

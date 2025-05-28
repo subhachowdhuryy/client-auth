@@ -1,7 +1,7 @@
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
 import { AgGridReact } from "ag-grid-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import type { ColDef } from "ag-grid-community";
 
 interface UserInterface {
@@ -16,13 +16,20 @@ interface UserInterface {
 const UsersGrid = () => {
   const [rowData, setRowData] = useState<UserInterface[]>([]);
   const [colDefs] = useState<ColDef<UserInterface>[]>([
-    { field: "id", headerName: "ID", width: 80 },
-    { field: "name", headerName: "Name", filter: true, width: 160 },
-    { field: "email", headerName: "Email", filter: true, width: 220 },
-    { field: "phone", headerName: "Phone Number", width: 140 },
-    { field: "role", headerName: "Role", filter: true, width: 120 },
-    { field: "joiningDate", headerName: "Joining Date", width: 140 },
+    { field: "id", headerName: "ID", width: 80, filter: true },
+    { field: "name", headerName: "Name", width: 160, filter: true },
+    { field: "email", headerName: "Email", width: 220, filter: true },
+    { field: "phone", headerName: "Phone Number", width: 140, filter: true },
+    { field: "role", headerName: "Role", width: 120, filter: true },
+    { field: "joiningDate", headerName: "Joining Date", width: 140, filter: true },
   ]);
+
+  // Enable floating filters for all columns
+  const defaultColDef = useMemo<ColDef>(() => ({
+    floatingFilter: true,
+    resizable: true,
+    sortable: true,
+  }), []);
 
   useEffect(() => {
     setRowData([
@@ -110,7 +117,7 @@ const UsersGrid = () => {
     <div
       className="ag-theme-quartz"
       style={{
-        height: 500,
+        minHeight: 520,
         width: 900,
         margin: "0 auto",
       }}
@@ -118,6 +125,7 @@ const UsersGrid = () => {
       <AgGridReact
         rowData={rowData}
         columnDefs={colDefs}
+        defaultColDef={defaultColDef}
         domLayout="normal"
       />
     </div>
