@@ -117,7 +117,7 @@ const UsersGrid = () => {
     <div
       className="ag-theme-quartz"
       style={{
-        minHeight: 520,
+        height: 520,
         width: 900,
         margin: "0 auto",
       }}
