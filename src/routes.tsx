@@ -8,10 +8,7 @@ const routes: RouteObject[] = [
     path: '/',
     element: <SignInPage />,
   },
-  {
-    path: '/sign-in',
-    element: <SignInPage />,
-  },
+
   {
     path: '/dashboard',
     element: <Dashboard />,
