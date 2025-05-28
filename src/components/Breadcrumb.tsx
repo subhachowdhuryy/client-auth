@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 interface BreadcrumbItem {
   title: string;
@@ -14,39 +15,49 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ items }) => {
   return (
     <nav
       aria-label="breadcrumb"
-      className="w-full bg-white"
-      style={{
-        // boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
-        marginLeft: 0,
-        paddingLeft: 0,
-        paddingRight: 0,
-      }}
+      className="w-full bg-white px-6 py-2"
+      style={{ boxShadow: "0 1px 3px rgba(0,0,0,0.1)" }}
     >
-      <ol className="w-full flex flex-wrap items-center justify-start text-base text-gray-500 pl-0 ml-0">
-        <li>
-          <Link to="/" className="hover:text-indigo-600 flex items-center">
-            <span
-              className="icon-home"
-              aria-label="Home"
-              style={{ fontSize: "2rem", lineHeight: 1 }}
-            >
-              🏠
-            </span>
-          </Link>
-        </li>
-        {items.map((item, idx) => (
-          <li key={idx} className="flex items-center">
-            <span className="mx-2 text-xl">/</span>
-            {item.link ? (
-              <Link to={item.link} className="hover:text-indigo-600">
-                {item.title}
-              </Link>
-            ) : (
-              <span className="text-gray-700 font-medium">{item.title}</span>
-            )}
+      <div className="flex items-center justify-between">
+        {/* Breadcrumbs */}
+        <ol className="flex flex-wrap items-center text-base text-gray-500">
+          <li>
+            <Link to="/" className="hover:text-indigo-600 flex items-center">
+              <span
+                className="icon-home"
+                aria-label="Home"
+                style={{ fontSize: "2rem", lineHeight: 1 }}
+              >
+                🏠
+              </span>
+            </Link>
           </li>
-        ))}
-      </ol>
+          {items.map((item, idx) => (
+            <li key={idx} className="flex items-center">
+              <span className="mx-2 text-xl">/</span>
+              {item.link ? (
+                <Link to={item.link} className="hover:text-indigo-600">
+                  {item.title}
+                </Link>
+              ) : (
+                <span className="text-gray-700 font-medium">{item.title}</span>
+              )}
+            </li>
+          ))}
+        </ol>
+        {/* Button at the end of the row */}
+        <Button
+          className="bg-[#3730a3] hover:bg-indigo-900 text-white font-semibold px-6 py-2 rounded shadow"
+          style={{
+            fontSize: "1.2rem",
+            letterSpacing: "1px",
+            backgroundColor: "grey",
+            transition: "background-color 0.3s ease",
+          }}
+        >
+          Click me
+        </Button>
+      </div>
     </nav>
   );
 };

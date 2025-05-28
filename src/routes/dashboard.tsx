@@ -6,11 +6,11 @@ import Breadcrumb from "../components/Breadcrumb";
 export default function Dashboard() {
   return (
     <>
-      <Navbar />
       <SignedIn>
+        <Navbar />
         <div style={{ paddingTop: "40px", margin: "0 auto" }}>
           <Breadcrumb items={[{ title: "Dashboard", link: null }]} />
-          {/* <p>Welcome! You are signed in.</p> */}
+          
           <div style={{ paddingTop: "20px" }}>
             <UsersGrid />
           </div>
