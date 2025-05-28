@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
+import moment from "moment";
 
 interface BreadcrumbItem {
   title: string;
@@ -14,6 +15,37 @@ interface BreadcrumbProps {
 
 const Breadcrumb: React.FC<BreadcrumbProps> = ({ items }) => {
   const [open, setOpen] = useState(false);
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    role: "Developer",
+    joiningDate: "",
+  });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Format date using moment
+    const formatted = {
+      ...form,
+      joiningDate: moment(form.joiningDate).format("YYYY-MM-DD"),
+    };
+    console.log(formatted);
+    setOpen(false);
+    setForm({
+      name: "",
+      email: "",
+      phone: "",
+      role: "Developer",
+      joiningDate: "",
+    });
+  };
 
   return (
     <nav
@@ -77,24 +109,36 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ items }) => {
               <DialogPrimitive.Title className="text-lg font-semibold mb-4">
                 Add User Details
               </DialogPrimitive.Title>
-              <form className="space-y-4">
+              <form className="space-y-4" onSubmit={handleSubmit}>
                 <div>
                   <label className="block mb-1 font-medium">Name</label>
                   <input
+                    name="name"
+                    value={form.name}
+                    onChange={handleChange}
                     className="w-full border rounded px-3 py-2"
                     placeholder="Alice Johnson"
+                    required
                   />
                 </div>
                 <div>
                   <label className="block mb-1 font-medium">Email</label>
                   <input
+                    name="email"
+                    type="email"
+                    value={form.email}
+                    onChange={handleChange}
                     className="w-full border rounded px-3 py-2"
                     placeholder="alice.johnson@example.com"
+                    required
                   />
                 </div>
                 <div>
                   <label className="block mb-1 font-medium">Phone</label>
                   <input
+                    name="phone"
+                    value={form.phone}
+                    onChange={handleChange}
                     className="w-full border rounded px-3 py-2"
                     placeholder="1234567890"
                   />
@@ -102,8 +146,10 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ items }) => {
                 <div>
                   <label className="block mb-1 font-medium">Role</label>
                   <select
+                    name="role"
+                    value={form.role}
+                    onChange={handleChange}
                     className="w-full border rounded px-3 py-2"
-                    defaultValue="Developer"
                   >
                     <option value="Developer">Developer</option>
                     <option value="Designer">Designer</option>
@@ -113,8 +159,12 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ items }) => {
                 <div>
                   <label className="block mb-1 font-medium">Joining Date</label>
                   <input
+                    name="joiningDate"
                     type="date"
+                    value={form.joiningDate}
+                    onChange={handleChange}
                     className="w-full border rounded px-3 py-2"
+                    required
                   />
                 </div>
                 <div className="flex justify-end gap-2 mt-6">
@@ -123,21 +173,26 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ items }) => {
                       Cancel
                     </Button>
                   </DialogPrimitive.Close>
-                  <Button  className="text-white font-semibold px-6 py-2 rounded shadow"
-              style={{
-                fontSize: "1.2rem",
-                letterSpacing: "1px",
-                transition: "background-color 0.3s ease",
-                backgroundColor: "#a3a8a7",
-              }}
-              onMouseEnter={(e) => {
-                (e.target as HTMLButtonElement).style.backgroundColor =
-                  "var(--color-indigo-700)";
-              }}
-              onMouseLeave={(e) => {
-                (e.target as HTMLButtonElement).style.backgroundColor =
-                  "#a3a8a7";
-              }} type="submit">Submit</Button>
+                  <Button
+                    className="text-white font-semibold px-6 py-2 rounded shadow"
+                    style={{
+                      fontSize: "1.2rem",
+                      letterSpacing: "1px",
+                      transition: "background-color 0.3s ease",
+                      backgroundColor: "#a3a8a7",
+                    }}
+                    onMouseEnter={(e) => {
+                      (e.target as HTMLButtonElement).style.backgroundColor =
+                        "var(--color-indigo-700)";
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.target as HTMLButtonElement).style.backgroundColor =
+                        "#a3a8a7";
+                    }}
+                    type="submit"
+                  >
+                    Submit
+                  </Button>
                 </div>
               </form>
             </DialogPrimitive.Content>
