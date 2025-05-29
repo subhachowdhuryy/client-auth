@@ -1,5 +1,7 @@
 import './App.css'
 import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from '@clerk/clerk-react';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -83,6 +85,7 @@ function App() {
           </SignedIn>
         </header>
       </div>
+      <ToastContainer position="top-right" autoClose={3000} />
     </>
   )
 }

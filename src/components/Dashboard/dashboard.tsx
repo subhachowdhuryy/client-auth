@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/clerk-react";
+import { ToastContainer } from "react-toastify";
 import Navbar from "../Navbar";
 import UsersGrid from "../usersGrid/UsersGrid";
 import Breadcrumb from "../Breadcrumb";
 import UserListAdd from "../usersGrid/UserListAdd";
 import type { UserInterface } from "../usersGrid/UserListAdd";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Dashboard() {
   const [refresh, setRefresh] = useState(0);
@@ -58,6 +60,7 @@ export default function Dashboard() {
       <SignedOut>
         <RedirectToSignIn />
       </SignedOut>
+      <ToastContainer position="top-right" autoClose={3000} />
     </>
   );
 }

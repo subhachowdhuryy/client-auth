@@ -6,6 +6,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import moment from "moment";
 import emailjs from "emailjs-com";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export interface UserInterface {
   id?: number;
@@ -95,8 +97,8 @@ const UserListAdd: React.FC<UserListAddProps> = ({
     if (!editUser) {
       try {
         const response = await emailjs.send(
-          "client-auth",      // Replace with your EmailJS service ID
-          "template_wmu0un1",     // Replace with your EmailJS template ID
+          "client-auth",
+          "template_wmu0un1",
           {
             to_email: "subhachowdhuryy@gmail.com",
             from_name: data.name,
@@ -105,12 +107,16 @@ const UserListAdd: React.FC<UserListAddProps> = ({
             role: data.role,
             joining_date: formatted.joiningDate,
           },
-          "4hj2h8X3lGaHJw292"       // Replace with your EmailJS public key
+          "4hj2h8X3lGaHJw292"
         );
         console.log("Email sent status:", response.status, response.text);
+        toast.success("Employee added successfully!");
       } catch (error) {
         console.log("Email send error:", error);
+        toast.error("Failed to send email.");
       }
+    } else {
+      toast.success("Employee updated successfully!");
     }
   };
 

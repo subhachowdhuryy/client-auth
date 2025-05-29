@@ -1,6 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react"; // Add this import
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface BreadcrumbItem {
   title: string;
@@ -48,17 +51,27 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ items, onAddClick }) => {
         </ol>
         {/* Button to trigger modal */}
         <Button
-          className="text-white font-semibold px-6 py-2 rounded shadow"
+          className="text-white font-semibold px-6 py-2 rounded shadow transition-colors duration-300"
           style={{
             fontSize: "1.2rem",
             letterSpacing: "1px",
             backgroundColor: "#a3a8a7",
           }}
+          onMouseEnter={(e) => {
+            (e.target as HTMLElement).style.backgroundColor =
+              "var(--color-indigo-700)";
+          }}
+          onMouseLeave={(e) => {
+            (e.target as HTMLElement).style.backgroundColor = "#a3a8a7";
+          }}
           onClick={onAddClick}
+          title="Add Employee" // Tooltip added here
         >
-          Click me
+          <Plus size={20} /> {/* Plus icon */}
+          Add
         </Button>
       </div>
+      <ToastContainer position="top-right" autoClose={3000} />
     </nav>
   );
 };
