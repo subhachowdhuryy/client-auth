@@ -4,6 +4,7 @@ import { AgGridReact } from "ag-grid-react";
 import { useEffect, useState, useMemo } from "react";
 import type { ColDef } from "ag-grid-community";
 import { Pencil, Trash2 } from "lucide-react"; // lucide-react icons
+import UserListDelete from "./userListDelete";
 
 interface UserInterface {
   id: number;
@@ -70,7 +71,8 @@ const UsersGrid = ({ refresh, onEditUser }: UsersGridProps) => {
                 cursor: "pointer",
                 padding: 0,
               }}
-              onClick={() => alert(`Delete user: ${params.data?.name ?? ""}`)}
+              onClick={() => params.data && handleDeleteClick(params.data)}
+              // onClick={() => alert(`Delete user: ${params.data?.name ?? ""}`)}
             >
               <Trash2 size={18} color="#ef4444" />
             </button>
@@ -87,7 +89,28 @@ const UsersGrid = ({ refresh, onEditUser }: UsersGridProps) => {
       },
     ]
   );
+const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+const [userToDelete, setUserToDelete] = useState<UserInterface | null>(null);
 
+const handleDeleteClick = (user: UserInterface) => {
+  setUserToDelete(user);
+  setDeleteDialogOpen(true);
+};
+
+const handleDeleteConfirm = () => {
+  if (userToDelete) {
+    // Get current users from localStorage
+    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    // Filter out the user to delete
+    const updatedUsers = users.filter((u: UserInterface) => u.id !== userToDelete.id);
+    // Save updated list back to localStorage
+    localStorage.setItem("users", JSON.stringify(updatedUsers));
+    // Update the grid data
+    setRowData(updatedUsers);
+    // Close the dialog
+    setDeleteDialogOpen(false);
+  }
+};
   const defaultColDef = useMemo<ColDef>(
     () => ({
       floatingFilter: true,
@@ -117,6 +140,12 @@ const UsersGrid = ({ refresh, onEditUser }: UsersGridProps) => {
         defaultColDef={defaultColDef}
         domLayout="normal"
       />
+      <UserListDelete
+  open={deleteDialogOpen}
+  setOpen={setDeleteDialogOpen}
+  onDeleteConfirm={handleDeleteConfirm}
+  userName={userToDelete?.name || ""}
+/>
     </div>
   );
 };
