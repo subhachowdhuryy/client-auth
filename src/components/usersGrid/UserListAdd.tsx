@@ -71,7 +71,6 @@ const UserListAdd: React.FC<UserListAddProps> = ({
     defaultValues: defaultForm,
   });
 
-  // Populate form when editing
   useEffect(() => {
     if (editUser) {
       reset({
@@ -93,7 +92,6 @@ const UserListAdd: React.FC<UserListAddProps> = ({
     };
     onUserSubmit(editUser ? { ...formatted, id: editUser.id } : formatted);
 
-    // Only send email when adding (not editing)
     if (!editUser) {
       try {
         const response = await emailjs.send(

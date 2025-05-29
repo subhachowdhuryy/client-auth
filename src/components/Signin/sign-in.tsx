@@ -6,7 +6,6 @@ export default function SignInPage() {
       <h1 style={{ 
         color: '#3730a3', 
         textAlign: 'center', 
-        // marginTop: '2rem', 
         marginBottom: '2rem', 
         fontSize: '2.5rem', 
         letterSpacing: '1px' 
@@ -15,12 +14,10 @@ export default function SignInPage() {
       </h1>
       <div
         style={{
-        //   background: 'linear-gradient(135deg, #e0e7ff 0%, #f0fdfa 100%)',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-        //   minHeight: '80vh',
         }}
       >
         <header

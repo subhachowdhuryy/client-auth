@@ -48,7 +48,7 @@ const UserListDelete: React.FC<UserListDeleteProps> = ({
                 style={{
                   fontSize: "1.2rem",
                   letterSpacing: "1px",
-                  backgroundColor: "#dc2626", // Red color for delete action
+                  backgroundColor: "#dc2626", 
                 }}
                 type="button"
                 onClick={handleDelete}

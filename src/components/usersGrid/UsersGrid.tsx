@@ -3,7 +3,7 @@ import "ag-grid-community/styles/ag-theme-quartz.css";
 import { AgGridReact } from "ag-grid-react";
 import { useEffect, useState, useMemo } from "react";
 import type { ColDef } from "ag-grid-community";
-import { Pencil, Trash2 } from "lucide-react"; // lucide-react icons
+import { Pencil, Trash2 } from "lucide-react"; 
 import UserListDelete from "./userListDelete";
 
 interface UserInterface {
