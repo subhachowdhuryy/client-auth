@@ -16,7 +16,7 @@ console.log('User:', user)
         <SignedIn>
           {isLoaded && user && (
             <span className="text-base font-medium text-gray-700">
-              {user.username} 
+              {user?.username} 
             </span>
           )}
           <UserButton afterSignOutUrl="/" />
