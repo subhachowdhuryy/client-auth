@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/clerk-react";
-import Navbar from "../components/Navbar";
-import UsersGrid from "../components/usersGrid/UsersGrid";
-import Breadcrumb from "../components/Breadcrumb";
-import UserListAdd from "../components/usersGrid/UserListAdd";
-import type { UserInterface } from "../components/usersGrid/UserListAdd";
+import Navbar from "../Navbar";
+import UsersGrid from "../usersGrid/UsersGrid";
+import Breadcrumb from "../Breadcrumb";
+import UserListAdd from "../usersGrid/UserListAdd";
+import type { UserInterface } from "../usersGrid/UserListAdd";
 
 export default function Dashboard() {
   const [refresh, setRefresh] = useState(0);
