@@ -1,3 +1,25 @@
+Employee Management Portal
+
+A React web app for managing employee records with secure authentication and a responsive UI.
+
+Features:
+
+    Authentication: Secure sign-in/out via Clerk.
+
+    Employee CRUD: Add, edit, delete employee records (name, email, phone, role, joining date).
+
+    Validation: Forms validated with React Hook Form + Zod.
+
+    Email Alerts: New employee notifications via EmailJS.
+
+    Responsive UI: Built with shadcn/ui + Tailwind CSS.
+
+    Persistence: Data stored in localStorage.
+
+    Notifications: Feedback via react-toastify.
+
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
