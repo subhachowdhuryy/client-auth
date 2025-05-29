@@ -11,7 +11,7 @@ export default function SignInPage() {
         fontSize: '2.5rem', 
         letterSpacing: '1px' 
       }}>
-        User Management Portal
+        Employee Management Portal
       </h1>
       <div
         style={{

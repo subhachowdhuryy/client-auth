@@ -12,7 +12,7 @@ function App() {
         fontSize: '2.5rem', 
         letterSpacing: '1px' 
       }}>
-        User Management Portal
+        Employee Management Portal
       </h1>
       <div
         style={{
