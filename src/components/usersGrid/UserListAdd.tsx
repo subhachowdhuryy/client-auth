@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import moment from "moment";
+import emailjs from "emailjs-com";
 
 export interface UserInterface {
   id?: number;
@@ -83,12 +84,34 @@ const UserListAdd: React.FC<UserListAddProps> = ({
     }
   }, [editUser, open, reset]);
 
-  const onSubmit = (data: FormValues) => {
+  const onSubmit = async (data: FormValues) => {
     const formatted = {
       ...data,
       joiningDate: moment(data.joiningDate).format("YYYY-MM-DD"),
     };
     onUserSubmit(editUser ? { ...formatted, id: editUser.id } : formatted);
+
+    // Only send email when adding (not editing)
+    if (!editUser) {
+      try {
+        const response = await emailjs.send(
+          "client-auth",      // Replace with your EmailJS service ID
+          "template_wmu0un1",     // Replace with your EmailJS template ID
+          {
+            to_email: "subhachowdhuryy@gmail.com",
+            from_name: data.name,
+            from_email: data.email,
+            phone: data.phone,
+            role: data.role,
+            joining_date: formatted.joiningDate,
+          },
+          "4hj2h8X3lGaHJw292"       // Replace with your EmailJS public key
+        );
+        console.log("Email sent status:", response.status, response.text);
+      } catch (error) {
+        console.log("Email send error:", error);
+      }
+    }
   };
 
   return (
